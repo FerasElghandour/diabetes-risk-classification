@@ -1,3 +1,3 @@
-# Data and input preparation
+# Input contract
 
-Provide data/diabetes_data.csv with Diabetes_binary and the 21 BRFSS health-indicator features used in the notebook. No health records or trained checkpoints are bundled.
+RiskMLP accepts a floating-point N-by-21 feature tensor and returns N-by-1 raw logits. Fit preprocessing only on training records, use BCEWithLogitsLoss for training, and pass validation labels/probabilities to choose_threshold. The core does not provide a trained model or health dataset. Its synthetic checks are not clinical validation.
