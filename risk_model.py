@@ -19,11 +19,12 @@ def choose_threshold(labels,probabilities,precision_floor=.72):
     if p.ndim!=1 or y.shape!=p.shape or not len(p):raise ValueError('Aligned nonempty vectors required')
     if not np.isfinite(p).all() or ((p<0)|(p>1)).any() or not np.isin(y,[0,1]).all():raise ValueError('Binary labels and finite probabilities required')
     if not 0<=precision_floor<=1 or not (y==1).any():raise ValueError('Valid floor and positive labels required')
-    candidates=[]
-    for threshold in np.unique(np.r_[0.,p,1.]):
-        pred=p>=threshold;tp=int(((y==1)&pred).sum());fp=int(((y==0)&pred).sum())
-        precision=tp/(tp+fp) if tp+fp else 0.;recall=tp/(y==1).sum()
-        if precision>=precision_floor:candidates.append((float(recall),float(precision),float(threshold)))
-    if not candidates:raise ValueError('No threshold satisfies the validation precision floor')
-    recall,precision,threshold=max(candidates)
-    return {'threshold':threshold,'validation_recall':recall,'validation_precision':precision}
+    # Group equal scores before scoring thresholds: sorting replaces the prior
+    # quadratic scan without changing the (recall, precision, threshold) tie rule.
+    order=np.argsort(-p,kind='stable');scores=p[order];positive=(y[order]==1)
+    ends=np.r_[np.flatnonzero(scores[:-1]!=scores[1:]),len(scores)-1]
+    tp=np.cumsum(positive)[ends];precision=tp/(ends+1);recall=tp/(y==1).sum()
+    thresholds=scores[ends];valid=precision>=precision_floor
+    if not valid.any():raise ValueError('No threshold satisfies the validation precision floor')
+    indices=np.flatnonzero(valid);best=indices[np.lexsort((thresholds[valid],precision[valid],recall[valid]))[-1]]
+    return {'threshold':float(thresholds[best]),'validation_recall':float(recall[best]),'validation_precision':float(precision[best])}

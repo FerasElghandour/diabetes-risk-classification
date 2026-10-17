@@ -8,6 +8,15 @@ A configurable SiLU tabular MLP and validation-only threshold selection under a 
 
 ![Implementation mechanism: 21-feature input tensor → 64-unit SiLU and dropout → 32-unit hidden layer → Single logit and BCEWithLogitsLoss → Validation threshold under precision floor](assets/mechanism.svg)
 
+
+
+## Train the tabular neural model
+
+The new full-data UCI CDC reference run uses duplicate-feature-group-safe splits, training-only scaling and validation-only threshold selection. The 50,736-row test has86.16% accuracy but only**1.13% positive-class recall** at the selected threshold. Fitted feature order, scaler and threshold accompany the checkpoint.
+
+[Commands, artifacts and benchmark scope](BENCHMARKS.md) · [Versioned profiles](reproduction.json)
+
+
 ## Try a small example
 
 Generated tensors and a small threshold fixture exercise the model interface and selection rule. These outputs are not trained risk estimates or clinical validation.

@@ -1,0 +1,50 @@
+{
+  "protocol": "validation-selected checkpoint; one final held-out evaluation",
+  "config": {
+    "classes": 2,
+    "features": 21,
+    "widths": [
+      64,
+      32
+    ],
+    "dropout": 0.1
+  },
+  "seed": 42,
+  "selected_epoch": 7,
+  "test": {
+    "rows": 50736,
+    "accuracy": 0.8615972879217912,
+    "macro_f1": 0.47390277227342054,
+    "confusion_matrix": [
+      [
+        43634,
+        33
+      ],
+      [
+        6989,
+        80
+      ]
+    ],
+    "class_recall": [
+      0.9992442805780108,
+      0.011317017965766021
+    ],
+    "loss": 0.31184395130821224
+  },
+  "validation_threshold": {
+    "threshold": 0.7185384035110474,
+    "validation_recall": 0.013863347008063374,
+    "validation_precision": 0.725925925925926
+  },
+  "data_sha256": "ef0396520415d8b59b7f80216aebfdcaf2f8de486c876340c091343061c47a2f",
+  "checkpoint_sha256": "8268e8140e519d1c1c66826e1a9b6a2a4c2d156f519f245b726d5f0a433d3e96",
+  "split_rows": {
+    "train": 152208,
+    "val": 50736,
+    "test": 50736
+  },
+  "python": "3.14.3",
+  "numpy": "2.5.4",
+  "torch": "2.14.1",
+  "evaluate_only": false
+}

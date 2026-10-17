@@ -1,0 +1,10 @@
+{
+  "classes": 2,
+  "features": 3,
+  "widths": [
+    8,
+    4
+  ],
+  "dropout": 0.1,
+  "_fixture": "risk"
+}
