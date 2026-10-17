@@ -1,0 +1,12 @@
+{
+  "logits_shape": [
+    4,
+    1
+  ],
+  "loss": 0.6969482898712158,
+  "threshold_example": {
+    "threshold": 0.6,
+    "validation_recall": 1.0,
+    "validation_precision": 1.0
+  }
+}

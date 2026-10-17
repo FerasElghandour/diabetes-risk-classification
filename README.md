@@ -1,18 +1,40 @@
 # Diabetes Risk Classification with PyTorch
 
-**Feras Elghandour** · Technical case study
-
 Study the sensitivity–precision trade-off of tabular neural classifiers while preventing duplicate feature vectors from leaking across data splits.
 
 ## Implementation
 
 A configurable SiLU tabular MLP and validation-only threshold selection under a precision floor.
 
-```mermaid
-flowchart LR
-    A[Validated inputs] --> B[Portable implementation]
-    B --> C[Evaluation and contract checks]
-    C --> D[Inspectable results]
+![Implementation mechanism: 21-feature input tensor → 64-unit SiLU and dropout → 32-unit hidden layer → Single logit and BCEWithLogitsLoss → Validation threshold under precision floor](assets/mechanism.svg)
+
+## Try a small example
+
+Generated tensors and a small threshold fixture exercise the model interface and selection rule. These outputs are not trained risk estimates or clinical validation.
+
+After the local setup below, run from the repository root:
+
+```sh
+python examples/quickstart.py
+```
+
+The [example source](examples/quickstart.py), [captured output](examples/expected-output.txt) and [execution record](examples/environment.json) keep this demonstration inspectable. Floating-point values may vary with library versions.
+
+Observed output from this run:
+
+```text
+{
+  "logits_shape": [
+    4,
+    1
+  ],
+  "loss": 0.6969482898712158,
+  "threshold_example": {
+    "threshold": 0.6,
+    "validation_recall": 1.0,
+    "validation_precision": 1.0
+  }
+}
 ```
 
 ## Completed study
@@ -30,7 +52,6 @@ python -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
 python smoke_test.py
-python smoke_test.py
 ```
 
 Prepare your own inputs as described in [DATA.md](DATA.md). Tests use generated fixtures and do not need credentials or provider calls. [VALIDATION.md](VALIDATION.md) records their scope.
@@ -38,5 +59,3 @@ Prepare your own inputs as described in [DATA.md](DATA.md). Tests use generated 
 ## Practical relevance and limitations
 
 This is a retrospective classification study, not a clinical decision tool. Multiple experiments are reported on the same test partition, so the record should not be treated as a fresh external validation. Thresholds and prevalence may not transfer to another population.
-
-This edition makes the core behavior reusable and inspectable. Historical metrics and synthetic contract tests provide different kinds of evidence; neither establishes client deployment or commercial impact.
