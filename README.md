@@ -68,3 +68,7 @@ Prepare your own inputs as described in [DATA.md](DATA.md). Tests use generated 
 ## Practical relevance and limitations
 
 This is a retrospective classification study, not a clinical decision tool. Multiple experiments are reported on the same test partition, so the record should not be treated as a fresh external validation. Thresholds and prevalence may not transfer to another population.
+
+## Reuse
+
+Original reproduction and validation tooling is available under MIT; see [LICENSING.md](LICENSING.md) for the explicit file scope and preserved upstream, dataset and checkpoint terms.
